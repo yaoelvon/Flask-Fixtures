@@ -91,16 +91,17 @@ def setup(obj):
     # Rollback any lingering transactions
     obj.db.session.rollback()
 
-
     # Construct a list of paths within which fixtures may reside
     default_fixtures_dir = os.path.join(current_app.root_path, 'fixtures')
 
     # All relative paths should be relative to the app's root directory.
-    fixtures_dirs = [default_fixtures_dir]
+    fixtures_dirs = []
     for directory in current_app.config.get('FIXTURES_DIRS', []):
         if not os.path.isabs(directory):
             directory = os.path.abspath(os.path.join(current_app.root_path, directory))
         fixtures_dirs.append(directory)
+
+    fixtures_dirs.append(default_fixtures_dir)
 
     # Load all of the fixtures
     for filename in obj.fixtures:
