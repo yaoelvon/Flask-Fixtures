@@ -41,7 +41,7 @@ class TestDefaultFixturesDir(unittest.TestCase, FixturesMixin):
         app.logger.debug('app.root_path={0}'.format(app.config['FIXTURES_DIRS']))
 
     def tearDown(self):
-        app.config['FIXTURES_DIRS'] = ''
+        app.config.pop('FIXTURES_DIRS')
         self.app_context.pop()
 
     def test_get_authors_json_from_dir_set(self):
