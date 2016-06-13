@@ -36,7 +36,10 @@ class TestDefaultFixturesDir(unittest.TestCase, FixturesMixin):
 
     def setUp(self):
         self.SUT_app = app
-        self.app_context = self.SUT_app.app_context()
+        if hasattr(app, 'app_context'):
+            self.app_context = self.SUT_app.app_context()
+        else:
+            self.app_context = self.SUT_app.test_reqeust_context()
         self.app_context.push()
         app.logger.debug('app.root_path={0}'.format(app.config['FIXTURES_DIRS']))
 
